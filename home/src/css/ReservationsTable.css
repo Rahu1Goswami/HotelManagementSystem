@@ -1,0 +1,32 @@
+/* Make the table cover the full width of the container */
+.reservations-table {
+  padding: 20px; /* Reduce padding so that the table gets more space */
+  margin-left: 200px; /* Remove any margin pushing the table inwards */
+  width: 100%; /* Ensure the container takes full width */
+  gap:20px  
+}
+
+table {
+  width: 100%; /* Ensure the table covers the full width */
+  border-collapse: collapse; /* No extra spacing between cells */
+  table-layout: auto; /* Allow the table to adjust based on content */
+}
+
+thead th {
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: left;
+  white-space: nowrap; /* Prevent header text from wrapping */
+}
+
+tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  white-space: nowrap; /* Prevent text wrapping in table cells */
+}
+
+body{
+  padding: 13px; /* Remove body padding to allow the table to stretch */
+  margin-top: 100px; 
+  
+}
