@@ -23,6 +23,17 @@ function Book() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setData(
+     { id: '',
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      dob: '',
+      gender: '',
+      phone: '',
+      email: '',
+      identityProof: ''}
+    )
     // Send the data to the backend via a POST request
  try {
      const response = await fetch('/booking', {

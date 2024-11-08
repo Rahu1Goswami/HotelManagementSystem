@@ -8,15 +8,17 @@ app.use(express.json()); // To parse JSON bodies
 
 // Sample route to fetch all records from a table
 app.post('/booking', (req, res) => {
-    const { id, firstName, middleName, lastName, dob, gender, phone, email, identityProof } = req.body;
-    console.log(id);
-    if (!id || !firstName || !lastName || !dob || !gender || !phone || !email || !identityProof) {
+    let room_id = 101;
+    let status = "Closed";
+    const { id: customer_id, firstName, middleName, lastName, dob, gender, phone, email, identityProof, checkin, checkout } = req.body;
+    console.log(customer_id);
+    if (!customer_id || !firstName || !lastName || !dob || !gender || !phone || !email || !identityProof || !checkin || !checkout) {
       return res.status(400).json({ error: 'Please fill in all the required fields' });
   }
     const sql = `INSERT INTO guests (id, FirstName, MiddleName, LastName, DOB, Gender, PhoneNo, EmailId, IdProof)
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   
-    db.query(sql, [id, firstName, middleName, lastName, dob, gender, phone, email, identityProof], (err, result) => {
+    db.query(sql, [customer_id, firstName, middleName, lastName, dob, gender, phone, email, identityProof], (err, result) => {
       if (err) {
         console.error('Error inserting data into MySQL:', err);
         res.status(500).json({ error: 'Database error' });
@@ -24,6 +26,16 @@ app.post('/booking', (req, res) => {
         res.json({ message: 'Booking saved successfully' });
       }
     });
+    const sql1 = `INSERT INTO transactions (customer_id, room_id, check_in, check_out, status)
+                   VALUES (?, ?, ?, ?, ?)`;
+                   db.query(sql1, [customer_id, room_id, checkin, checkout, status], (err, result) => {
+                    if (err) {
+                      console.error('Error inserting data into MySQL:', err);
+                      res.status(500).json({ error: 'Database error' });
+                    } else {
+                      res.json({ message: 'Booking saved successfully' });
+                    }
+                  });
   });
 
 app.listen(port, () => {
