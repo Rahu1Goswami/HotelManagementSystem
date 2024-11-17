@@ -10,9 +10,9 @@ app.use(express.json()); // To parse JSON bodies
 app.post('/booking', (req, res) => {
     let room_id = 101;
     let status = "Closed";
-    const { id: customer_id, firstName, middleName, lastName, dob, gender, phone, email, identityProof, checkin, checkout } = req.body;
+    const { id: customer_id, firstName, middleName, lastName, dob, gender, phone, email, identityProof, checkin, checkout, tier } = req.body;
     console.log(customer_id);
-    if (!customer_id || !firstName || !lastName || !dob || !gender || !phone || !email || !identityProof || !checkin || !checkout) {
+    if (!customer_id || !firstName || !lastName || !dob || !gender || !phone || !email || !identityProof || !checkin || !checkout || !tier) {
       return res.status(400).json({ error: 'Please fill in all the required fields' });
   }
     const sql = `INSERT INTO guests (id, FirstName, MiddleName, LastName, DOB, Gender, PhoneNo, EmailId, IdProof)
