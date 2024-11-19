@@ -18,7 +18,6 @@ const Book = () => {
     MaximumOccupency: ''
   });
   
-  const [availableRooms, setAvailableRooms] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -33,16 +32,11 @@ const Book = () => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-    const randomRoom = availableRooms[0]; 
-
-      if (!randomRoom) {
-        throw new Error('No available room selected.');
-      }
-
-      const bookingData = {
-        ...data,
-        roomId: randomRoom.id,  // Send the room's ID or any other relevant room data
-              };
+  
+    const bookingData = {
+      ...data
+        };
+  
     try {
       const response = await fetch('/booking', {
         method: 'POST',
@@ -51,27 +45,33 @@ const Book = () => {
         },
         body: JSON.stringify(bookingData),
       });
-
+  
       if (!response.ok) {
-        throw new Error('Booking failed. Please try again.');
+        const errorData = await response.json(); // Try to get more detailed error
+        throw new Error(errorData.message || 'Booking failed. Please try again.');
       }
-
-      await response.json();
+  
+      const result = await response.json();
+      console.log(result);
+      
+      // Reset form and show success
       setData({
+        // ... reset all fields
         firstName: '',
-        middleName: '',
-        lastName: '',
-        dob: '',
-        gender: '',
-        phone: '',
-        email: '',
-        identityProof: '',
-        checkin: '',
-        checkout: '',
-        tier: '',
-        MaximumOccupency: ''
+    middleName: '',
+    lastName: '',
+    dob: '',
+    gender: '',
+    phone: '',
+    email: '',
+    identityProof: '',
+    checkin: '',
+    checkout: '',
+    tier: '',
+    MaximumOccupency: ''
       });
       alert('Booking successful!');
+      navigate('/'); // Optional: redirect after successful booking
     } catch (error) {
       setError(error.message);
     } finally {
@@ -79,48 +79,6 @@ const Book = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchRooms = async () => {
-      if (!data.tier || !data.MaximumOccupency) return;
-      
-      try {
-        // Use URL parameters instead of request body for GET request
-        const queryParams = new URLSearchParams({
-          tier: data.tier,
-          occupancy: data.MaximumOccupency // Ensure server expects this key
-        });
-    
-        const response = await fetch(`/rooms?tier=${data.tier}&occupancy=${data.MaximumOccupency}`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
-        })
-        .then(res=>res.json)
-        .then(data=>console.log(data))
-    
-        if (!response.ok) {
-          throw new Error('Failed to fetch available rooms');
-        }
-
-        const rooms = await response.json();
-        const matchingRooms = rooms.filter(room =>
-          room.tier === data.tier &&
-          room.status === "available" &&
-          room.MaximumOccupency >= parseInt(data.MaximumOccupency)
-        );
-        
-        if (matchingRooms.length > 0) {
-          const randomRoom = matchingRooms[Math.floor(Math.random() * matchingRooms.length)];
-          setAvailableRooms([randomRoom]); // Update the state to hold only the selected room
-        } else {
-          setAvailableRooms([]);
-        }
-      } catch (error) {
-        setError('Error checking room availability');
-      }
-    };
-
-    fetchRooms();
-  }, [data.tier, data.MaximumOccupency]);
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md" id='ff'>
@@ -317,16 +275,15 @@ const Book = () => {
           </div>
         </div>
 
-        {availableRooms.length > 0 && (
+        {/* {availableRooms.length > 0 && (
           <div className="p-4 bg-green-50 rounded">
             <p className="text-green-700">
               {availableRooms.length} room(s) available. Room(s): {availableRooms.map(room => room.id).join(', ')}
             </p>
           </div>
-        )}
+        )} */}
  <br /> <br />
         <button
-        onClick={()=>navigate('/')}
           type="submit"
           className="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-blue-300"
           disabled={isLoading}
