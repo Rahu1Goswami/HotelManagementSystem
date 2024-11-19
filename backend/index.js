@@ -27,7 +27,6 @@ const getRoom = (tier, MaximumOccupency) => {
 app.post('/booking', async (req, res) => {
   let status = "Closed";
   const { firstName, middleName, lastName, dob, gender, phone, email, identityProof, checkin, checkout, tier, MaximumOccupency } = req.body;
-  console.log(req.body);
   
   // Validate input data
   if (!firstName || !lastName || !dob || !gender || !phone || !email || !identityProof || !checkin || !checkout || !tier || !MaximumOccupency) {
