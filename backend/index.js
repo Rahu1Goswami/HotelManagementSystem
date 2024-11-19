@@ -8,17 +8,17 @@ app.use(express.json()); // To parse JSON bodies
 
 // Sample route to fetch all records from a table
 app.post('/booking', (req, res) => {
-    let room_id = 101;
     let status = "Closed";
-    const { id: customer_id, firstName, middleName, lastName, dob, gender, phone, email, identityProof, checkin, checkout, tier } = req.body;
-    console.log(customer_id);
-    if (!customer_id || !firstName || !lastName || !dob || !gender || !phone || !email || !identityProof || !checkin || !checkout || !tier) {
+    let customer_id = 176;
+    const {firstName, middleName, lastName, dob, gender, phone, email, identityProof, checkin, checkout, tier, MaximumOccupency, roomId} = req.body;
+    console.log(roomId);
+    if (!firstName || !lastName || !dob || !gender || !phone || !email || !identityProof || !checkin || !checkout || !tier || !MaximumOccupency || !roomId) {
       return res.status(400).json({ error: 'Please fill in all the required fields' });
   }
-    const sql = `INSERT INTO guests (id, FirstName, MiddleName, LastName, DOB, Gender, PhoneNo, EmailId, IdProof)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO guests (FirstName, MiddleName, LastName, DOB, Gender, PhoneNo, EmailId, IdProof)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
   
-    db.query(sql, [customer_id, firstName, middleName, lastName, dob, gender, phone, email, identityProof], (err, result) => {
+    db.query(sql, [firstName, middleName, lastName, dob, gender, phone, email, identityProof], (err, result) => {
       if (err) {
         console.error('Error inserting data into MySQL:', err);
         res.status(500).json({ error: 'Database error' });
@@ -28,7 +28,7 @@ app.post('/booking', (req, res) => {
     });
     const sql1 = `INSERT INTO transactions (customer_id, room_id, check_in, check_out, status)
                    VALUES (?, ?, ?, ?, ?)`;
-                   db.query(sql1, [customer_id, room_id, checkin, checkout, status], (err, result) => {
+                   db.query(sql1, [customer_id, roomId, checkin, checkout, status], (err, result) => {
                     if (err) {
                       console.error('Error inserting data into MySQL:', err);
                       res.status(500).json({ error: 'Database error' });
@@ -37,7 +37,20 @@ app.post('/booking', (req, res) => {
                     }
                   });
   });
+app.get('/rooms',(req,res)=>{
+  const query = `SELECT * FROM rooms`;
+console.log(query);
 
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching rooms:', err);
+      return res.status(500).json({ error: 'Failed to fetch rooms' });
+    }
+  const a=  res.json(results); // Send the entire table as JSON
+  console.log(a);
+  
+  });
+})
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

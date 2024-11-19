@@ -2,6 +2,7 @@ import React from 'react';
 import '../css/ReservationsTable.css';
 
 const ReservationsTable = () => {
+  
   const data = [
     { booking: 2319, room: 118, guests: 'David Smith', checkIn: '03.10.23', checkOut: '06.10.23', status: 'Confirmed' },
     { booking: 2318, room: 117, guests: 'Dianne Rusel', checkIn: '03.10.23', checkOut: '05.10.23', status: 'Checked In' },
@@ -13,7 +14,7 @@ const ReservationsTable = () => {
       <table>
         <thead>
           <tr>
-            <th>Booking</th>
+            <th>Booking Id</th>
             <th>Room</th>
             <th>Guests</th>
             <th>Check-In</th>

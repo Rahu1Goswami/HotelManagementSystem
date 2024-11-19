@@ -1,5 +1,6 @@
 .book{
     font-size: 30px;
+    gap: 30px;
 }
 #ff{
     justify-content: center;
@@ -7,4 +8,13 @@
 }
 body{
     background-color: #444;
+}
+.block{
+   font-size: 40px;
+}
+.border{
+    font-size: large;
+}
+.py-2{
+    font-size: large ;
 }
