@@ -42,12 +42,10 @@ app.post('/booking', async (req, res) => {
       console.error('Error inserting data into MySQL:', err);
       return res.status(500).json({ error: 'Database error while inserting guest' });
     }
-    const guestId = result.insertId;  // result.insertId gives the ID of the last inserted row
-    console.log('Inserted Guest ID:', guestId);
+    const guestId = result.insertId;
     try {
       // Use async/await to get the roomId
       const roomId = await getRoom(tier, MaximumOccupency);
-      console.log(roomId);
 
       // Insert into transactions table
       const sql1 = `INSERT INTO transactions (guest_id, room_id, check_in, check_out, status)
