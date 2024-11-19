@@ -1,19 +1,17 @@
 import React from 'react';
 import '../css/Sidebar.css'; // Create your styles in this file
-
+import {useNavigate} from 'react-router-dom'
 const Sidebar = () => {
+  const navi=useNavigate()
   return (
     <div className="sidebar">
       <div className="profile">
         <p>Hotel_Name</p>
       </div>
       <ul className="menu">
-        <li>Home</li>
           <ul>
-            <li>Front Desk</li>
-            <li>Reservations</li>
-            <li>Guests</li>
-            <li>Housekeeping</li>
+            <li onClick={()=>navi("/")}>Home</li>
+            <li onClick={()=>navi("/employee")}>Employees</li>
           </ul>
       </ul>
     </div>

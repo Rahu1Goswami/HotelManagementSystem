@@ -5,7 +5,7 @@ import Header from './components/Header.js';
 import ReservationsTable from './components/ReservationsTable.js';
 import Book from './booking/booking.js';
 import './App.css'; // Ensure you have global styling
-
+import Employee from './booking/employees.js';
 function Layout({ children }) {
   const location = useLocation();
   const isAddBookingPage = location.pathname === '/booking';
@@ -28,6 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<ReservationsTable />} />
           <Route path="/booking" element={<Book />} />
+          <Route path="/employee" element={<Employee />}  />
         </Routes>
       </Layout>
     </Router>

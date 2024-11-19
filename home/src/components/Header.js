@@ -5,7 +5,6 @@ const Header = () => {
   const navigate=useNavigate()
   return (
     <div className="header">
-      <input type="text" placeholder="Search..." className="search-input" />
       <div className="user-actions">
         <button className="add-booking"onClick={()=>navigate('/booking')}>Add Booking</button>
         <hr />

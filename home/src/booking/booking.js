@@ -267,9 +267,7 @@ const Book = () => {
               required
             >
               <option value="">Select Occupancy</option>
-              <option value="1">1 Person</option>
               <option value="2">2 People</option>
-              <option value="3">3 People</option>
               <option value="4">4 People</option>
             </select>
           </div>

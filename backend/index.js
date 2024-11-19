@@ -25,7 +25,7 @@ const getRoom = (tier, MaximumOccupency) => {
 
 // Route to handle booking
 app.post('/booking', async (req, res) => {
-  let status = "Closed";
+  let status = "Checked-in";
   const { firstName, middleName, lastName, dob, gender, phone, email, identityProof, checkin, checkout, tier, MaximumOccupency } = req.body;
   
   // Validate input data
@@ -69,9 +69,41 @@ app.post('/booking', async (req, res) => {
       console.error(error);
       res.status(404).json({ error: error });
     }
+
+
+    const sql4 = `Update rooms set status = "Available" WHERE id in (SELECT room_id FROM transactions WHERE check_out < CURDATE())`;
+  db.query(sql4,(err1, result2) => {
+    if (err1) {
+      console.error('Error Updating data into rooms:', err1);
+      return res.status(500).json({ error: 'Database error while updating rooms' });
+    }});
+  const sql5 = `Update transactions set status = "Closed" WHERE check_out < CURDATE()`;
+  db.query(sql5,(err1, result2) => {
+    if (err1) {
+      console.error('Error Updating data into rooms:', err1);
+      return res.status(500).json({ error: 'Database error while updating rooms' });
+  }});
   });
 });
 
+
+app.post('/employee', async (req, res) => {
+  const { firstName, middleName, lastName, dob, gender, phone, email, address, jobtitle, salary} = req.body;
+  
+  // Validate input data
+  if (!firstName || !middleName || !lastName || !dob || !gender || !phone || !email || !address || !jobtitle || !salary) {
+    return res.status(400).json({ error: 'Please fill in all the required fields' });
+  }
+
+  const sql6 = `INSERT INTO employees (FirstName, MiddleName, LastName, DOB, Gender, PhoneNo, EmailId, Address, JobTitle, sallary)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  db.query(sql6, [firstName, middleName, lastName, dob, gender, phone, email, address, jobtitle, salary], async (err, result) => {
+    if (err) {
+      console.error('Error inserting data into employees in MySQL:', err);
+      return res.status(500).json({ error: 'Database error while inserting employees' });
+    }
+  });
+});
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
