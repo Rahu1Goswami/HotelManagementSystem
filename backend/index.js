@@ -49,6 +49,7 @@ app.post('/booking', async (req, res) => {
     try {
       const roomId = await getRoom(tier, MaximumOccupency);
 
+
       const sql1 = `INSERT INTO transactions (guest_id, room_id, check_in, check_out, status)
                     VALUES (?, ?, ?, ?, ?)`;
       db.query(sql1, [guestId, roomId, checkin, checkout, status], (err1, result1) => {
@@ -60,7 +61,7 @@ app.post('/booking', async (req, res) => {
         res.json({ message: 'Booking saved successfully' });
       });
 
-      const sql2 = `UPDATE rooms set status = "Occupied" WHERE id = ?`;
+      const sql2 = `UPDATE rooms set Status = "Occupied" WHERE id = ?`;
       db.query(sql2, roomId, (err1, result2) => {
         if (err1) {
           console.error('Error Updating data into rooms:', err1);
@@ -80,7 +81,6 @@ app.post('/emp', async (req, res) => {
   }
   const sql6 = `INSERT INTO employees (FirstName, MiddleName, LastName, DOB, Gender, PhoneNo, EmailId, Address, JobTitle, salary)
                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-  console.log(sql6);
   db.query(sql6, [firstName, middleName, lastName, dob, gender, phone, email, address, jobtitle, salary], async (err, result) => {
     if (err) {
       console.error('Error inserting data into employees in MySQL:', err);
@@ -102,7 +102,7 @@ app.post('/', async (req, res) => {
                  t.check_out, 
                  t.status 
                 FROM transactions t 
-                JOIN guests g ON t.guest_id = g.id`;
+                JOIN guests g ON t.guest_id = g.id order by t.id desc`;
                 
   db.query(sql7, (err, result6) => {
     if (err) {
@@ -112,18 +112,26 @@ app.post('/', async (req, res) => {
     res.json(result6);
   });
 
-  const sql4 = `Update rooms set status = "Available" WHERE id in (SELECT room_id FROM transactions WHERE check_out < CURDATE())`;
-db.query(sql4,(err1, result2) => {
-  if (err1) {
-    console.error('Error Updating data into rooms:', err1);
-    return res.status(500).json({ error: 'Database error while updating rooms' });
-  }});
 const sql5 = `Update transactions set status = "Closed" WHERE check_out < CURDATE()`;
 db.query(sql5,(err1, result2) => {
   if (err1) {
     console.error('Error Updating data into rooms:', err1);
     return res.status(500).json({ error: 'Database error while updating rooms' });
 }});
+
+const sql4 = `Update rooms set Status = "Available" WHERE id in (SELECT room_id FROM transactions WHERE status = "Closed")`;
+db.query(sql4,(err1, result2) => {
+  if (err1) {
+    console.error('Error Updating data into rooms:', err1);
+    return res.status(500).json({ error: 'Database error while updating rooms' });
+  }});
+
+  const sql30 = `Update rooms set Status = "Occupied" WHERE id in (SELECT room_id FROM transactions WHERE status = "Checked-in")`;
+  db.query(sql30,(err1, result2) => {
+    if (err1) {
+      console.error('Error Updating data into rooms:', err1);
+      return res.status(500).json({ error: 'Database error while updating rooms' });
+    }});
 
 
 });
@@ -137,13 +145,12 @@ app.post('/employee', async (req, res) => {
       return res.status(500).json({ error: 'Database error while fetching emoployees' });
     }
     
-    console.log(JSON.stringify(result7, null, 2));
     res.json(result7); // Send the result to the client
   });
 });
 
 app.post('/guests', async (req, res) => {
-  const sql9 = `SELECT id, FirstName, IFNULL(MiddleName, '') AS MiddleName, LastName, DOB, Gender, PhoneNo, EmailId, IdProof FROM guests`;
+  const sql9 = `SELECT id, FirstName, IFNULL(MiddleName, '') AS MiddleName, LastName, DOB, Gender, PhoneNo, EmailId, IdProof FROM guests order by id desc`;
                 
   db.query(sql9, (err, result8) => {
     if (err) {
