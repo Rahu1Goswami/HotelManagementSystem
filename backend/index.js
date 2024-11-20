@@ -104,6 +104,19 @@ app.post('/employee', async (req, res) => {
     }
   });
 });
+app.get('/',async(req,res)=>{
+  const sql7=`select t.id t.room_id g.FirstName g.MiddleName g.LastName t.check_in t.check_out t.status from transactions t JOIN guests g ON t.guest_id = g.id`
+  db.query(sql7, async (err, result6) => {
+    if (err) {
+      console.error('Error fetching data from transactions join guests MySQL:', err);
+      return res.status(500).json({ error: 'Database error while fetching employees' });
+    }
+    console.log(JSON.stringify(result6, null, 2));
+    
+});
+});
+
+// const sql8= `select id FirstName MiddleName LastName DOB Gender PhoneNo EmailId Address jobtitle salary from employees`
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

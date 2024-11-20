@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/ReservationsTable.css';
+import axios from 'axios';
 
 const ReservationsTable = () => {
-  
-  const data = [
-    { booking: 2319, room: 118, guests: 'David Smith', checkIn: '03.10.23', checkOut: '06.10.23', status: 'Confirmed' },
-    { booking: 2318, room: 117, guests: 'Dianne Rusel', checkIn: '03.10.23', checkOut: '05.10.23', status: 'Checked In' },
-    // Add more rows here
-  ];
+  const [data, setData] = useState([]); // Ensure initial state is an array
+
+  useEffect(() => {
+    const fetchInfo = async () => {
+      try {
+        const response = await axios.get('/');
+        console.log('API Response:', response.data); // Debug API response
+        // Handle response if it's nested
+        setData(Array.isArray(response.data) ? response.data : []); 
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setData([]); // Fallback to empty array on error
+      }
+    };
+    fetchInfo();
+  }, []);
 
   return (
     <div className="reservations-table">
@@ -23,16 +34,22 @@ const ReservationsTable = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((row, index) => (
-            <tr key={index}>
-              <td>{row.booking}</td>
-              <td>{row.room}</td>
-              <td>{row.guests}</td>
-              <td>{row.checkIn}</td>
-              <td>{row.checkOut}</td>
-              <td>{row.status}</td>
+          {data.length > 0 ? (
+            data.map((i) => (
+              <tr key={i.id}>
+                <td>{i.room_id}</td>
+                <td>{i.guest_id}</td>
+                <td>{i.FirstName}</td>
+                <td>{i.check_in}</td>
+                <td>{i.check_out}</td>
+                <td>{i.status}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="6">No Guests</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>
