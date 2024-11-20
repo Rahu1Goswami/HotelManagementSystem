@@ -95,7 +95,7 @@ app.post('/employee', async (req, res) => {
     return res.status(400).json({ error: 'Please fill in all the required fields' });
   }
 
-  const sql6 = `INSERT INTO employees (FirstName, MiddleName, LastName, DOB, Gender, PhoneNo, EmailId, Address, JobTitle, sallary)
+  const sql6 = `INSERT INTO employees (FirstName, MiddleName, LastName, DOB, Gender, PhoneNo, EmailId, Address, JobTitle, salary)
                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   db.query(sql6, [firstName, middleName, lastName, dob, gender, phone, email, address, jobtitle, salary], async (err, result) => {
     if (err) {
