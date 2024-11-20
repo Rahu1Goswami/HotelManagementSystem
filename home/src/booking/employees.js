@@ -1,6 +1,8 @@
 import React,{useState} from 'react'
 import '../css/Header.css'
+import { useNavigate } from 'react-router-dom';
  const Employee =()=>{
+  const navi=useNavigate()
     const [data, setData] = useState({
         firstName: '',
         middleName: '',
@@ -34,6 +36,7 @@ import '../css/Header.css'
             jobtitle:'',
             salary:''
           });
+          navi('/employee')
         e.preventDefault();
         setIsLoading(true);
         setError('');
@@ -42,7 +45,7 @@ import '../css/Header.css'
             ...data,
             };
         try {
-          const response = await fetch('/employee', {
+          const response = await fetch('/emp', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

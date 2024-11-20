@@ -1,38 +1,32 @@
 
 import React, { useEffect, useState } from 'react';
-import '../css/Sidebar.css'
+import '../css/ReservationsTable.css';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
-const EmployeeDetails = () => {
+const GuestDetails = () => {
     const navi=useNavigate()
 
 const [data,setData]=useState([])
 useEffect(()=>{
   const fetchInfo=async()=>{
-    const response= await axios.post('/employee')
+    const response= await axios.post('/guests')
     console.log(response);
     setData(response.data)
   }
   fetchInfo()
 },[])
   return (
-    <> 
-
     <div className="reservations-table">
-    <button classname='ghd'style={{backgroundColor: "#00c1ee", fontSize:"130%",textAlign:"center",justifyContent:"center", color: "white"}} onClick={()=>navi('/emp')}>ADD EMPLOYEE</button>
-
       <table>
         <thead>
           <tr>
-            <th>Employee Id</th>
+            <th>Guest Id</th>
             <th>Name</th>
             <th>DOB</th>
             <th>Gender</th>
             <th>Phone Number</th>
             <th>Email ID</th>
-            <th>Address</th>
-            <th>job</th>
-            <th>salary</th>
+            <th>ID Proof Number</th>
           </tr>
         </thead>
         <tbody>
@@ -44,14 +38,14 @@ useEffect(()=>{
               <td>{i.Gender}</td>
               <td>{i.PhoneNo}</td>
               <td>{i.EmailId}</td>
-              <td>{i.Address}</td>
-              <td>{i.jobtitle}</td>
-              <td>{i.salary}</td>
+              <td>{i.IdProof}</td>
             </tr>
-          )):(<h1>No Employee</h1>)}
+          )):(<h1>No Guests</h1>)}
         </tbody>
-      </table>  
+      </table>
+      
     </div>
-  </>)
+  );
 };
-export default EmployeeDetails;
+
+export default GuestDetails;

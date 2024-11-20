@@ -5,6 +5,7 @@ const Header = () => {
   const navigate=useNavigate()
   return (
     <div className="header">
+      <h1>hotel management system </h1>
       <div className="user-actions">
         <button className="add-booking"onClick={()=>navigate('/booking')}>Add Booking</button>
         <hr />

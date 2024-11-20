@@ -1,7 +1,7 @@
 /* Ensure the sidebar takes up the full height and is fixed on the left */
 .sidebar {
   width: 200px;
-  background-color: #f8f9fa; /* Light gray background */
+  background-color: #232d32; /* Light gray background */
   height: 100vh; /* Full viewport height */
   padding: 20px;
   position: fixed;
@@ -32,7 +32,7 @@
 }
 
 .profile p {
-  color: #6c757d; /* Subtle gray for the role */
+  color: #ffffff; /* Subtle gray for the role */
 }
 
 /* Menu styling */
@@ -45,12 +45,12 @@
 .menu li {
   padding: 10px 0;
   font-size: 16px;
-  color: #212529;
+  color: #ffffff;
   cursor: pointer;
 }
 
 .menu li:hover {
-  background-color: #e9ecef;
+  background-color: #0071e3;
   border-radius: 5px;
   padding-left: 10px;
 }
@@ -63,10 +63,13 @@
 
 .menu li ul li {
   font-size: 14px;
-  color: #495057;
+  color: #ffffff;
 }
 
 .menu li ul li:hover {
   background-color: transparent;
   padding-left: 0;
+}
+.ghd{
+  background-color: #e8e8e8;
 }

@@ -1,44 +1,79 @@
-/* The header should be aligned with the top of the page */
+/* General Body Styling */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+  background-color: #44688d; /* Soft light gray background */
+  color: #ffffff; /* Dark text for readability */
+}
+
+/* Header Styling */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background-color: #fff;
-  border-bottom: 1px solid #dee2e6;
-  margin-left: 250px; /* Align with sidebar */
+  padding: 10px 20px;
+  background-color: #3e8dbb; /* Dark Slate Gray for professional look */
+  border-bottom: 2px solid #ffffff; /* Light border for separation */
   height: 80px;
   position: fixed;
   top: 0;
-  width: calc(100% - 300px); 
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
 
-/* Search input styling */
+/* Search Input Styling */
 .search-input {
   width: 300px;
   padding: 10px;
-  border: 1px solid #ced4da;
+  border: 1px solid #a4a028; /* Light Steel Blue for input border */
   border-radius: 5px;
   font-size: 14px;
+  outline: none;
+  background-color: #bc5b5b; /* White background for input */
+  color: #dd9f9f; /* Dark gray text */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* User actions like profile and buttons */
+.search-input:focus {
+  border-color: #e2e2e2; /* Steel Blue for focused border */
+  box-shadow: 0 0 5px rgba(0, 104, 189, 0.5); /* Subtle blue shadow */
+}
+
+/* User Actions Styling */
 .user-actions {
   display: flex;
   align-items: center;
 }
 
+/* Add Booking Button */
 .add-booking {
-  padding: 10px 20px;
+  padding: 20px 20px;
+  margin-top: 20px;
   margin-right: 20px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #00a7d0; /* Steel Blue for buttons */
+  color: #f5f5f5; /* White text for contrast */
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
+  
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.add-booking:hover {
+  background-color: #1b4de5; /* Royal Blue on hover */
+  transform: scale(1.05);
+}
+
+.add-booking:active {
+  background-color: #f1f4fc; /* Darker blue for active state */
+}
+
+/* Profile Section Styling */
 .profile {
   display: flex;
   align-items: center;
@@ -49,15 +84,98 @@
   height: 40px;
   border-radius: 50%;
   margin-right: 10px;
+  border: 2px solid #2f73ab; /* Steel Blue border */
 }
 
 .profile span {
   font-size: 16px;
   font-weight: bold;
+  color: #1d8c42; /* Matches button and accent color */
 }
-body{
-  width: 100%;
-}
-.space{
+
+/* Space Class */
+.space {
   padding-left: 40%;
+}
+
+/* General Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Removes space between cells */
+  margin: 20px 0;
+  font-size: 13px;
+  text-align: left;
+  border: 1px solid #814f4f; /* Light border for cells */
+  background-color: #d2dae3; /* White background for the table */
+}
+
+th, td {
+  padding: 6px 8px; /* Reduced padding for tighter columns */
+  border: 1px solid #3e8dbb; /* Light gray border */
+  white-space: nowrap; /* Prevent wrapping of cell content */
+}
+
+th {
+  background-color: #1aff00; /* Steel Blue header background */
+  color: #ffffff; /* White text for contrast */
+  font-weight: bold;
+}
+
+td {
+  color: #212324; /* Dark gray text for readability */
+}
+
+/* Row Hover Effect */
+tr:hover {
+  background-color: #d3dfe9; /* Very light blue for hover effect */
+}
+
+/* Specific Column Widths */
+th:first-child,
+td:first-child {
+  width: 50px; /* Compact width for the first column */
+}
+
+td:nth-child(2),
+th:nth-child(2) {
+  max-width: 150px; /* Adjusts width for name or long text columns */
+}
+
+td:nth-child(3),
+th:nth-child(3) {
+  max-width: 120px; /* DOB column */
+}
+
+td:nth-child(7),
+th:nth-child(7) {
+  max-width: 100px; /* Job title column */
+}
+
+/* Responsive Table Container */
+.table-container {
+  overflow-x: auto; /* Enable scrolling only if necessary */
+  margin: 0 auto;
+  max-width: 95%; /* Keeps table within screen bounds */
+  background-color: #ced2d8; /* White background for contrast */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for focus */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1600px) {
+  table {
+    font-size: 12px; /* Slightly smaller font size for tighter screens */
+  }
+  th, td {
+    padding: 5px 6px; /* More compact padding */
+  }
+}
+
+@media (max-width: 950px) {
+  .table-container {
+    overflow-x: auto; /* Scroll enabled for very small screens */
+  }
+  th, td {
+    font-size: 11px; /* Smaller font for narrow screens */
+    padding: 4px 5px;
+  }
 }
